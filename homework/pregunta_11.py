@@ -16,3 +16,22 @@ def pregunta_11():
 
 
     """
+
+    with open("./files/input/data.csv", newline="", encoding="utf-8") as f:
+        total = {}
+        for raw_line in f:
+            # Eliminamos salto de línea y separamos manualmente por tab
+            parts = raw_line.strip().split("\t")
+            if len(parts) != 5:
+                raise ValueError(f"Línea mal formateada: {raw_line}")
+            
+            numero = int(parts[1])
+            lista = parts[3].split(",")
+            
+            for letra in lista:
+                if letra not in total.keys():
+                    total[letra] = numero
+                else:
+                    total[letra] += numero
+        
+        return total

@@ -15,3 +15,22 @@ def pregunta_12():
     {'A': 177, 'B': 187, 'C': 114, 'D': 136, 'E': 324}
 
     """
+
+    with open("./files/input/data.csv", newline="", encoding="utf-8") as f:
+        total = {}
+        for raw_line in f:
+            # Eliminamos salto de línea y separamos manualmente por tab
+            parts = raw_line.strip().split("\t")
+            if len(parts) != 5:
+                raise ValueError(f"Línea mal formateada: {raw_line}")
+            
+            tipo = parts[0]
+            diccionario = {k: int(v) for k, v in (x.split(":") for x in parts[4].split(","))}
+            
+            if tipo not in total.keys():
+                total[tipo] = 0
+
+            for key in diccionario:
+                total[tipo] += diccionario[key]
+                
+        return total

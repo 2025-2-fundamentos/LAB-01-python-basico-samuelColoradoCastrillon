@@ -26,3 +26,27 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+    
+    with open("./files/input/data.csv", newline="", encoding="utf-8") as f:
+        total = {}
+        for raw_line in f:
+            # Eliminamos salto de línea y separamos manualmente por tab
+            parts = raw_line.strip().split("\t")
+            if len(parts) != 5:
+                raise ValueError(f"Línea mal formateada: {raw_line}")
+            
+            lista = [x.split(":") for x in parts[4].split(",")]
+
+            print(lista[0])
+            for i in lista:
+                if i[0] not in total.keys():
+                    total[i[0]] = set()
+                    total[i[0]].add(int(i[1]))
+                else:
+                    total[i[0]].add(int(i[1]))
+        resultado = []
+
+        for key in sorted(total):
+            resultado.append((key, min(total[key]), max(total[key])))
+
+        return resultado

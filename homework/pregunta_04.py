@@ -5,6 +5,7 @@ solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+import csv
 
 def pregunta_04():
     """
@@ -26,3 +27,15 @@ def pregunta_04():
      ('12', 3)]
 
     """
+
+    with open("./files/input/data.csv", newline="", encoding="utf-8") as f:
+        lector = csv.reader(f)
+        total = {}
+        for fila in lector:
+            fila[0] = fila[0].split()
+            fecha = fila[0][2].split("-")
+            if fecha[1] not in total.keys():
+                total[fecha[1]] = 1
+            else:
+                total[fecha[1]] += 1
+        return sorted(total.items())

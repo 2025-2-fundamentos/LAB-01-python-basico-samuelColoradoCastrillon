@@ -27,3 +27,27 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+
+    with open("./files/input/data.csv", newline="", encoding="utf-8") as f:
+        total = {}
+        for raw_line in f:
+            # Eliminamos salto de línea y separamos manualmente por tab
+            parts = raw_line.strip().split("\t")
+            if len(parts) != 5:
+                raise ValueError(f"Línea mal formateada: {raw_line}")
+            
+            tipo = parts[0]
+            numero = int(parts[1])
+
+            print(tipo, numero)
+
+            if numero not in total.keys():
+                total[numero] = set()
+                total[numero].add(tipo)
+            else:
+                total[numero].add(tipo)
+
+        for key in total:
+            total[key] = sorted(list(total[key]))
+
+        return sorted(total.items())
